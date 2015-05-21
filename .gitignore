@@ -1,3 +1,6 @@
+#shinyapps
+/shinyapps
+
 # History files
 .Rhistory
 .Rapp.history

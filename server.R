@@ -14,8 +14,8 @@ shinyServer(function(input, output) {
   a <- as.numeric(input$alpha)
   t <- input$tail
   b <- as.numeric(input$beta)
-  p1 <- as.numeric(input$p1)
-  p2 <- as.numeric(input$p2)
+  p1 <- as.numeric(input$p1/100)
+  p2 <- as.numeric(input$p2/100)
   r <- as.numeric(input$r)
   
   if(input$tail == "one"){
