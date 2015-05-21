@@ -9,8 +9,10 @@ A [Shiny app](http://shiny.rstudio.com/) to estimate number of samples in a prop
 * *p1(%)* - Proportion (expressed as a percentage) of positive outcomes in the first group
 * *p2(%)* - Proportion (expressed as a percentage) of positive outcomes in the second group
 * *ratio* - Ratio of the sample in the second group to the first group
+* *Samples per Week* - Depending on the person hours and business context limitations, set the number of samples that would be collected per week during the course of the experiment
 
 ## Outputs
 * *N* - Total sample size for both groups
 * *W* - Weeks to finish the work
 * *D* - Days to finish the work
+* *M* - Months to finish the work

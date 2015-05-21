@@ -33,7 +33,7 @@ shinyUI(fluidPage(
                      c("one", "two")),
         radioButtons("beta",
                      "Beta Value:",
-                     c("0.01","0.025","0.05", "0.1")),
+                     c("0.05","0.1","0.2", "0.25")),
         sliderInput(inputId = "p1",label = "p1(%):",min = 0, max = 100, step = 1,value = 8),
         sliderInput(inputId = "p2",label = "p2(%):",min = 0, max = 100, step = 1,value = 10),
         numericInput(inputId = 'r',label = "Ratio:",value = 1, min = 1, max = 10, step = 1),
