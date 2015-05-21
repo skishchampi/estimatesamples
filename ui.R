@@ -36,7 +36,8 @@ shinyUI(fluidPage(
                      c("0.01","0.025","0.05", "0.1")),
         sliderInput(inputId = "p1",label = "p1(%):",min = 0, max = 1, step = 0.01,value = 0.08),
         sliderInput(inputId = "p2",label = "p2(%):",min = 0, max = 1, step = 0.01,value = 0.10),
-        numericInput(inputId = 'r',label = "Ratio:",value = 1, min = 1, max = 10, step = 1)
+        numericInput(inputId = 'r',label = "Ratio:",value = 1, min = 1, max = 10, step = 1),
+        numericInput(inputId = 'ph', label = "Samples per Week:", value = 25, min = 1, step =1 )
     ),
 
     # Show a plot of the generated distribution

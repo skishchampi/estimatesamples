@@ -1,5 +1,5 @@
 # estimatesamples
-A [Shiny app](http://shiny.rstudio.com/) to estimate number of samples in a proportions test derived from Casagrande, Pike and Smith (1978) *Biometrics* 34: 483-486 and Fleiss, Tytun and Ury (1980) *Biometrics* 36: 343-346. 
+A [Shiny app](http://shiny.rstudio.com/) to estimate number of samples in a proportions test derived from [Casagrande, Pike and Smith (1978) *Biometrics* 34: 483-486](http://www.jstor.org/stable/2530613?seq=1#page_scan_tab_contents) and [Fleiss, Tytun and Ury (1980) *Biometrics* 36: 343-346](http://www.jstor.org/stable/2529990?seq=1#page_scan_tab_contents). 
 
 ## Inputs
 
@@ -12,5 +12,5 @@ A [Shiny app](http://shiny.rstudio.com/) to estimate number of samples in a prop
 
 ## Outputs
 * *N* - Total sample size for both groups
-* *V1*
-* *V3*
+* *W* - Weeks to finish the work
+* *D* - Days to finish the work

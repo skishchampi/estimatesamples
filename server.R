@@ -36,7 +36,9 @@ shinyServer(function(input, output) {
   formb6value = pz(z0)
   formb7value = pz(z1)
   
-  df <- data.frame(cbind(N, N/25, (N/25)*5))
+  df <- data.frame(cbind(N, N/input$ph, (N/input$ph)*5))
+  
+  colnames(df) <- c("N", "W", "D")
   
   df
 
