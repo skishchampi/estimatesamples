@@ -12,19 +12,9 @@ shinyUI(fluidPage(
   # Application title
   titlePanel("Estimate Samples for a Proportions Test"),
 
-  # Sidebar with a slider input for number of bins
+  # User Inputs including alpha, beta values among others
   sidebarLayout(
     sidebarPanel(
-#       sliderInput("alpha",
-#                   "Alpha Value:",
-#                   min = 1,
-#                   max = 50,
-#                   value = 30),
-#       sliderInput("beta",
-#                   "Beta Value:",
-#                   min =,
-#                   max=,
-#                   value=,),
         radioButtons("alpha",
                      "Alpha Value:",
                      c("0.01","0.025","0.05", "0.1")),
@@ -34,13 +24,32 @@ shinyUI(fluidPage(
         radioButtons("beta",
                      "Beta Value:",
                      c("0.05","0.1","0.2", "0.25")),
-        sliderInput(inputId = "p1",label = "p1(%):",min = 0, max = 100, step = 1,value = 8),
-        sliderInput(inputId = "p2",label = "p2(%):",min = 0, max = 100, step = 1,value = 10),
-        numericInput(inputId = 'r',label = "Ratio:",value = 1, min = 1, max = 10, step = 1),
-        numericInput(inputId = 'ph', label = "Samples per Week:", value = 25, min = 1, step =1 )
+        sliderInput(inputId = "p1",
+                    label = "p1(%):",
+                    min = 0,
+                    max = 100,
+                    step = 1,
+                    value = 8),
+        sliderInput(inputId = "p2",
+                    label = "p2(%):",
+                    min = 0,
+                    max = 100,
+                    step = 1,
+                    value = 10),
+        numericInput(inputId = 'r',
+                     label = "Ratio:",
+                     value = 1,
+                     min = 1,
+                     max = 10,
+                     step = 1),
+        numericInput(inputId = 'ph',
+                     label = "Samples per Week:",
+                     value = 25,
+                     min = 1,
+                     step =1)
     ),
 
-    # Show a plot of the generated distribution
+    # Show a table of the generated sample values
     mainPanel(
       tableOutput("samples")
     )

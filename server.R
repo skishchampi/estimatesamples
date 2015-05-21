@@ -44,7 +44,7 @@ shinyServer(function(input, output) {
 
   })
    pz <- function(z){
-    #var  x, t,w,y,
+    
     a=abs(z)
     
     if (z == 0.0) {
@@ -69,13 +69,13 @@ shinyServer(function(input, output) {
   }
   
   m <- function(B5,B6,B7,B8,B9,B10,B11) {
-    #var m1
+    
     m1=(((B5*sqrt((B10+1)*B11*(1-B11))+B6*sqrt(B10*B7*(1-B7)+B8*(1-B8)))^2)/(B10*(B9^2)))
     return (m1)
   }
   
   mm <- function(B9,B10,B12) {
-    #var m2
+    
     m2=floor(0.5+(B12/4)*((1+sqrt(1+2*(B10+1)/(B10*B12*B9)))^2))
     return (m2)
   }
@@ -85,7 +85,7 @@ shinyServer(function(input, output) {
    c1 <- function(a) {
     z = 1/2
     j = 1/2
-    #var i,y,k,h
+    
     k = a/2
     d <- c(0.25,0.125,0.0625,0.03125,0.015625,0.0078125,0.00390625,0.001953125,0.0009765625,0.00048828125,0.000244140625,0.0001220703125,0.00006103515625,0.000030517578125,0.0000152587890625,0.00000762939453125,0.000003814697265625,0.0000019073486328125)
     for(i in d) { 
@@ -107,10 +107,10 @@ shinyServer(function(input, output) {
   #one tails total left area = b => critical point
   
   c2 <- function(b) {
-    #var z=j=1/2
+    
     z = 1/2
     j = 1/2
-    #var f,n,q,l,m
+    
     f=1-b
     if  (f>1/2) {
       n=1-f
