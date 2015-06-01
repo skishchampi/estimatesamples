@@ -6,6 +6,7 @@
 #
 
 library(shiny)
+library(ggplot2)
 
 shinyServer(function(input, output) {
 
@@ -15,7 +16,11 @@ shinyServer(function(input, output) {
   t <- input$tail
   b <- as.numeric(input$beta)
   p1 <- as.numeric(input$p1/100)
+  pone <- seq(as.numeric(input$p1/100),as.numeric(input$p1/100)+0.05,by=0.01)
+  pone_c <- rep(as.numeric(input$p1/100),each=5)
   p2 <- as.numeric(input$p2/100)
+  ptwo<- seq(as.numeric(input$p2/100),as.numeric(input$p2/100)+0.05,by=0.01)
+  ptwo_c <- rep(as.numeric(input$p2/100),each=5)
   r <- as.numeric(input$r)
   
   if(input$tail == "one"){
@@ -24,11 +29,10 @@ shinyServer(function(input, output) {
     z0 = c1(a)
   }
   z1 = c2(b)
-  
+
   formb1value = abs(p2-p1)
   formb2value = (p1+r*p2)/(r+1)
   formb3value = round(m(z0, z1, p1, p1, formb1value, r, formb2value))
-  
   m = mm(formb1value, r, formb3value)
   
   N = round(1 + r)*m
@@ -38,10 +42,323 @@ shinyServer(function(input, output) {
   
   df <- data.frame(cbind(N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
   
-  colnames(df) <- c("N", "D", "W", "M")
+  colnames(df) <- c("Samples", "Days", "Weeks", "Months")
   
   df
 
+  })
+  
+  output$pOne <- renderTable({
+    
+    a <- as.numeric(input$alpha)
+    t <- input$tail
+    b <- as.numeric(input$beta)
+    p1 <- as.numeric(input$p1/100)
+    pone <- seq(as.numeric(input$p1/100),as.numeric(input$p1/100)+0.05,by=0.01)
+    pone_c <- rep(as.numeric(input$p1/100),each=5)
+    p2 <- as.numeric(input$p2/100)
+    ptwo<- seq(as.numeric(input$p2/100),as.numeric(input$p2/100)+0.05,by=0.01)
+    ptwo_c <- rep(as.numeric(input$p2/100),each=5)
+    r <- as.numeric(input$r)
+    
+    if(input$tail == "one"){
+      z0 = c2(a)
+    }else{
+      z0 = c1(a)
+    }
+    z1 = c2(b)
+    
+    df <- data.frame()
+    for(i in ptwo){
+      formb1value = abs(i-p1)
+      formb2value = (p1+r*i)/(r+1)
+      formb3value = round(m(z0, z1, p1, p1, formb1value, r, formb2value))
+      m = mm(formb1value, r, formb3value)
+      
+      N = round(1 + r)*m
+      
+      formb6value = pz(z0)
+      formb7value = pz(z1)
+      df <- rbind(df,cbind(p1, i, N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
+    }
+    colnames(df) <- c("P1","P2", "Samples", "Days", "Weeks", "Months")
+    
+    df
+  })
+  output$plot_pOne <- renderPlot({
+    
+    a <- as.numeric(input$alpha)
+    t <- input$tail
+    b <- as.numeric(input$beta)
+    p1 <- as.numeric(input$p1/100)
+    pone <- seq(as.numeric(input$p1/100),as.numeric(input$p1/100)+0.05,by=0.01)
+    pone_c <- rep(as.numeric(input$p1/100),each=5)
+    p2 <- as.numeric(input$p2/100)
+    ptwo<- seq(as.numeric(input$p2/100),as.numeric(input$p2/100)+0.05,by=0.01)
+    ptwo_c <- rep(as.numeric(input$p2/100),each=5)
+    r <- as.numeric(input$r)
+    
+    if(input$tail == "one"){
+      z0 = c2(a)
+    }else{
+      z0 = c1(a)
+    }
+    z1 = c2(b)
+    
+    df <- data.frame()
+    for(i in ptwo){
+      formb1value = abs(i-p1)
+      formb2value = (p1+r*i)/(r+1)
+      formb3value = round(m(z0, z1, p1, p1, formb1value, r, formb2value))
+      m = mm(formb1value, r, formb3value)
+      
+      N = round(1 + r)*m
+      
+      formb6value = pz(z0)
+      formb7value = pz(z1)
+      df <- rbind(df,cbind(p1, i, N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
+    }
+    colnames(df) <- c("P1","P2", "Samples", "Days", "Weeks", "Months")
+    
+    p <- ggplot(data=df, aes(x=P2, y =Weeks))
+    p + geom_line(stat = "identity")
+  }
+    
+  )
+  output$pTwo <- renderTable({
+    
+    a <- as.numeric(input$alpha)
+    t <- input$tail
+    b <- as.numeric(input$beta)
+    p1 <- as.numeric(input$p1/100)
+    pone <- seq(as.numeric(input$p1/100),as.numeric(input$p1/100)+0.05,by=0.01)
+    pone_c <- rep(as.numeric(input$p1/100),each=5)
+    p2 <- as.numeric(input$p2/100)
+    ptwo<- seq(as.numeric(input$p2/100),as.numeric(input$p2/100)+0.05,by=0.01)
+    ptwo_c <- rep(as.numeric(input$p2/100),each=5)
+    r <- as.numeric(input$r)
+    
+    if(input$tail == "one"){
+      z0 = c2(a)
+    }else{
+      z0 = c1(a)
+    }
+    z1 = c2(b)
+    
+    df <- data.frame()
+    for(i in pone){
+      formb1value = abs(p2-i)
+      formb2value = (i+r*p2)/(r+1)
+      formb3value = round(m(z0, z1, i, i, formb1value, r, formb2value))
+      m = mm(formb1value, r, formb3value)
+      
+      N = round(1 + r)*m
+      
+      formb6value = pz(z0)
+      formb7value = pz(z1)
+      df <- rbind(df,cbind(i, p2, N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
+    }
+    colnames(df) <- c("P1","P2", "Samples", "Days", "Weeks", "Months")
+    
+    df
+  })
+  output$plot_pTwo <- renderPlot({
+    
+    a <- as.numeric(input$alpha)
+    t <- input$tail
+    b <- as.numeric(input$beta)
+    p1 <- as.numeric(input$p1/100)
+    pone <- seq(as.numeric(input$p1/100),as.numeric(input$p1/100)+0.05,by=0.01)
+    pone_c <- rep(as.numeric(input$p1/100),each=5)
+    p2 <- as.numeric(input$p2/100)
+    ptwo<- seq(as.numeric(input$p2/100),as.numeric(input$p2/100)+0.05,by=0.01)
+    ptwo_c <- rep(as.numeric(input$p2/100),each=5)
+    r <- as.numeric(input$r)
+    
+    if(input$tail == "one"){
+      z0 = c2(a)
+    }else{
+      z0 = c1(a)
+    }
+    z1 = c2(b)
+    
+    df <- data.frame()
+    for(i in pone){
+      formb1value = abs(p2-i)
+      formb2value = (i+r*p2)/(r+1)
+      formb3value = round(m(z0, z1, i, i, formb1value, r, formb2value))
+      m = mm(formb1value, r, formb3value)
+      
+      N = round(1 + r)*m
+      
+      formb6value = pz(z0)
+      formb7value = pz(z1)
+      df <- rbind(df,cbind(i, p2, N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
+    }
+    colnames(df) <- c("P1","P2", "Samples", "Days", "Weeks", "Months")
+    
+
+    
+    p <- ggplot(data=df, aes(x=P1, y =Weeks))
+    p + geom_line(stat = "identity")
+  })
+  output$alpha <- renderTable({
+    
+    a <- as.numeric(input$alpha)
+    #alpha <- c(0.01,0.025,0.05,0.1)
+    t <- input$tail
+    #b <- as.numeric(input$beta)
+    b <- c(0.05,
+           0.1,
+           0.2,
+           0.25)
+    p1 <- as.numeric(input$p1/100)
+    #     pone <- seq(as.numeric(input$p1/100),as.numeric(input$p1/100)+0.05,by=0.01)
+    #     pone_c <- rep(as.numeric(input$p1/100),each=5)
+    p2 <- as.numeric(input$p2/100)
+    #     ptwo<- seq(as.numeric(input$p2/100),as.numeric(input$p2/100)+0.05,by=0.01)
+    #     ptwo_c <- rep(as.numeric(input$p2/100),each=5)
+    r <- as.numeric(input$r)
+    df = data.frame()
+    for(i in b){
+      if(input$tail == "one"){
+        z0 = c2(a)
+      }else{
+        z0 = c1(a)
+      }
+      z1 = c2(i)
+      
+      formb1value = abs(p2-p1)
+      formb2value = (p1+r*p2)/(r+1)
+      formb3value = round(m(z0, z1, p1, p1, formb1value, r, formb2value))
+      m = mm(formb1value, r, formb3value)
+      
+      N = round(1 + r)*m
+      
+      formb6value = pz(z0)
+      formb7value = pz(z1)
+      df <- rbind(df,cbind(i,N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
+    }
+    colnames(df) <- c("Beta", "Samples", "Days", "Weeks", "Months")
+    
+    df
+  })
+  output$plot_alpha <- renderPlot({
+    
+    a <- as.numeric(input$alpha)
+    #alpha <- c(0.01,0.025,0.05,0.1)
+    t <- input$tail
+    #b <- as.numeric(input$beta)
+    b <- c(0.05,0.1,0.2,0.25)
+    p1 <- as.numeric(input$p1/100)
+    #     pone <- seq(as.numeric(input$p1/100),as.numeric(input$p1/100)+0.05,by=0.01)
+    #     pone_c <- rep(as.numeric(input$p1/100),each=5)
+    p2 <- as.numeric(input$p2/100)
+    #     ptwo<- seq(as.numeric(input$p2/100),as.numeric(input$p2/100)+0.05,by=0.01)
+    #     ptwo_c <- rep(as.numeric(input$p2/100),each=5)
+    r <- as.numeric(input$r)
+    df = data.frame()
+    for(i in b){
+      if(input$tail == "one"){
+        z0 = c2(a)
+      }else{
+        z0 = c1(a)
+      }
+      z1 = c2(i)
+      
+      
+      formb1value = abs(p2-p1)
+      formb2value = (p1+r*p2)/(r+1)
+      formb3value = round(m(z0, z1, p1, p1, formb1value, r, formb2value))
+      m = mm(formb1value, r, formb3value)
+      
+      N = round(1 + r)*m
+      
+      formb6value = pz(z0)
+      formb7value = pz(z1)
+      df <- rbind(df,cbind(i,N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
+    }
+    colnames(df) <- c("Beta", "Samples", "Days", "Weeks", "Months")
+    
+    p <- ggplot(data=df, aes(x=Beta, y =Weeks))
+    p + geom_line(stat = "identity")
+  })
+  output$beta <- renderTable({
+    
+    # a <- as.numeric(input$alpha)
+    a <- c(0.01,0.025,0.05,0.1)
+    t <- input$tail
+    b <- as.numeric(input$beta)
+    p1 <- as.numeric(input$p1/100)
+#     pone <- seq(as.numeric(input$p1/100),as.numeric(input$p1/100)+0.05,by=0.01)
+#     pone_c <- rep(as.numeric(input$p1/100),each=5)
+    p2 <- as.numeric(input$p2/100)
+#     ptwo<- seq(as.numeric(input$p2/100),as.numeric(input$p2/100)+0.05,by=0.01)
+#     ptwo_c <- rep(as.numeric(input$p2/100),each=5)
+    r <- as.numeric(input$r)
+    df = data.frame()
+    for(i in a){
+    if(input$tail == "one"){
+      z0 = c2(i)
+    }else{
+      z0 = c1(i)
+    }
+    z1 = c2(b)
+    
+      formb1value = abs(p2-p1)
+      formb2value = (p1+r*p2)/(r+1)
+      formb3value = round(m(z0, z1, p1, p1, formb1value, r, formb2value))
+      m = mm(formb1value, r, formb3value)
+      
+      N = round(1 + r)*m
+      
+      formb6value = pz(z0)
+      formb7value = pz(z1)
+      df <- rbind(df,cbind(i,N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
+    }
+    colnames(df) <- c("Alpha", "Samples", "Days", "Weeks", "Months")
+    
+    df
+  })
+  output$plot_beta <- renderPlot({
+    
+    #a <- as.numeric(input$alpha)
+    a <- c(0.01,0.025,0.05,0.1)
+    t <- input$tail
+    b <- as.numeric(input$beta)
+    #b <- c(0.05,0.1,0.2,0.25)
+    p1 <- as.numeric(input$p1/100)
+    #     pone <- seq(as.numeric(input$p1/100),as.numeric(input$p1/100)+0.05,by=0.01)
+    #     pone_c <- rep(as.numeric(input$p1/100),each=5)
+    p2 <- as.numeric(input$p2/100)
+    #     ptwo<- seq(as.numeric(input$p2/100),as.numeric(input$p2/100)+0.05,by=0.01)
+    #     ptwo_c <- rep(as.numeric(input$p2/100),each=5)
+    r <- as.numeric(input$r)
+    df = data.frame()
+    for(i in a){
+      if(input$tail == "one"){
+        z0 = c2(i)
+      }else{
+        z0 = c1(i)
+      }
+      z1 = c2(b)
+      
+
+      formb1value = abs(p2-p1)
+      formb2value = (p1+r*p2)/(r+1)
+      formb3value = round(m(z0, z1, p1, p1, formb1value, r, formb2value))
+      m = mm(formb1value, r, formb3value)
+      
+      N = round(1 + r)*m
+      
+      formb6value = pz(z0)
+      formb7value = pz(z1)
+      df <- rbind(df,cbind(i,N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
+    }
+    colnames(df) <- c("Alpha", "Samples", "Days", "Weeks", "Months")
+    
+    p <- ggplot(data=df, aes(x=Alpha, y =Weeks))
+    p + geom_line(stat = "identity")
   })
    pz <- function(z){
     
@@ -71,6 +388,7 @@ shinyServer(function(input, output) {
   m <- function(B5,B6,B7,B8,B9,B10,B11) {
     
     m1=(((B5*sqrt((B10+1)*B11*(1-B11))+B6*sqrt(B10*B7*(1-B7)+B8*(1-B8)))^2)/(B10*(B9^2)))
+    #cat(m1)
     return (m1)
   }
   

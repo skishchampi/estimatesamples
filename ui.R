@@ -51,7 +51,29 @@ shinyUI(fluidPage(
 
     # Show a table of the generated sample values
     mainPanel(
-      tableOutput("samples")
+      tabsetPanel(id = "tabs",
+                  tabPanel("Samples",
+                           tableOutput("samples")),
+                  tabPanel("Constant P1",
+                           tableOutput("pOne"),
+                           plotOutput("plot_pOne")),
+                  tabPanel("Constant P2",
+                           tableOutput("pTwo"),
+                           plotOutput("plot_pTwo")),
+                  tabPanel("Constant Alpha",
+                           tableOutput("alpha")
+                           ,
+                           plotOutput("plot_alpha")
+                           ),
+                  tabPanel("Constant Beta",
+                           tableOutput("beta")
+                           ,
+                          plotOutput("plot_beta")
+                           )
+                  
+                  
+                  )
+      
     )
   )
 ))
