@@ -6,6 +6,7 @@
 #
 
 library(shiny)
+library(DT)
 
 shinyUI(fluidPage(
 
@@ -53,20 +54,20 @@ shinyUI(fluidPage(
     mainPanel(
       tabsetPanel(id = "tabs",
                   tabPanel("Samples",
-                           tableOutput("samples")),
+                           dataTableOutput("samples")),
                   tabPanel("Constant P1",
-                           tableOutput("pOne"),
+                           dataTableOutput("pOne"),
                            plotOutput("plot_pOne")),
                   tabPanel("Constant P2",
-                           tableOutput("pTwo"),
+                           dataTableOutput("pTwo"),
                            plotOutput("plot_pTwo")),
                   tabPanel("Constant Alpha",
-                           tableOutput("alpha")
+                           dataTableOutput("alpha")
                            ,
                            plotOutput("plot_alpha")
                            ),
                   tabPanel("Constant Beta",
-                           tableOutput("beta")
+                           dataTableOutput("beta")
                            ,
                           plotOutput("plot_beta")
                            )

@@ -7,10 +7,11 @@
 
 library(shiny)
 library(ggplot2)
+library(DT)
 
 shinyServer(function(input, output) {
 
-  output$samples <- renderTable({
+  output$samples <- renderDataTable({
 
   a <- as.numeric(input$alpha)
   t <- input$tail
@@ -40,15 +41,15 @@ shinyServer(function(input, output) {
   formb6value = pz(z0)
   formb7value = pz(z1)
   
-  df <- data.frame(cbind(N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
+  df <- data.frame(cbind(p1, p2, a, b, N, (N/input$ph)*5,N/input$ph, ((N/input$ph))/4))
   
-  colnames(df) <- c("Samples", "Days", "Weeks", "Months")
+  colnames(df) <- c("P1","P2","Alpha", "Beta","Samples", "Days", "Weeks", "Months")
   
-  df
+  datatable(df,options = list(dom='t'))
 
   })
   
-  output$pOne <- renderTable({
+  output$pOne <- renderDataTable({
     
     a <- as.numeric(input$alpha)
     t <- input$tail
@@ -83,7 +84,10 @@ shinyServer(function(input, output) {
     }
     colnames(df) <- c("P1","P2", "Samples", "Days", "Weeks", "Months")
     
-    df
+    datatable(df, extensions = 'TableTools', options = list(
+      dom = 'T<"clear">t',
+      tableTools = list(sSwfPath = copySWF('www'))
+    ))
   })
   output$plot_pOne <- renderPlot({
     
@@ -121,11 +125,11 @@ shinyServer(function(input, output) {
     colnames(df) <- c("P1","P2", "Samples", "Days", "Weeks", "Months")
     
     p <- ggplot(data=df, aes(x=P2, y =Weeks))
-    p + geom_line(stat = "identity")
+    p + geom_bar(stat = "identity")
   }
     
   )
-  output$pTwo <- renderTable({
+  output$pTwo <- renderDataTable({
     
     a <- as.numeric(input$alpha)
     t <- input$tail
@@ -160,7 +164,10 @@ shinyServer(function(input, output) {
     }
     colnames(df) <- c("P1","P2", "Samples", "Days", "Weeks", "Months")
     
-    df
+    datatable(df, extensions = 'TableTools', options = list(
+      dom = 'T<"clear">t',
+      tableTools = list(sSwfPath = copySWF('www'))
+    ))
   })
   output$plot_pTwo <- renderPlot({
     
@@ -202,7 +209,7 @@ shinyServer(function(input, output) {
     p <- ggplot(data=df, aes(x=P1, y =Weeks))
     p + geom_line(stat = "identity")
   })
-  output$alpha <- renderTable({
+  output$alpha <- renderDataTable({
     
     a <- as.numeric(input$alpha)
     #alpha <- c(0.01,0.025,0.05,0.1)
@@ -241,7 +248,10 @@ shinyServer(function(input, output) {
     }
     colnames(df) <- c("Beta", "Samples", "Days", "Weeks", "Months")
     
-    df
+    datatable(df, extensions = 'TableTools', options = list(
+      dom = 'T<"clear">t',
+      tableTools = list(sSwfPath = copySWF('www'))
+    ))
   })
   output$plot_alpha <- renderPlot({
     
@@ -283,7 +293,7 @@ shinyServer(function(input, output) {
     p <- ggplot(data=df, aes(x=Beta, y =Weeks))
     p + geom_line(stat = "identity")
   })
-  output$beta <- renderTable({
+  output$beta <- renderDataTable({
     
     # a <- as.numeric(input$alpha)
     a <- c(0.01,0.025,0.05,0.1)
@@ -318,7 +328,10 @@ shinyServer(function(input, output) {
     }
     colnames(df) <- c("Alpha", "Samples", "Days", "Weeks", "Months")
     
-    df
+    datatable(df, extensions = 'TableTools', options = list(
+      dom = 'T<"clear">t',
+      tableTools = list(sSwfPath = copySWF('www'))
+    ))
   })
   output$plot_beta <- renderPlot({
     
