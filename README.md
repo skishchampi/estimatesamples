@@ -16,3 +16,6 @@ A [Shiny app](http://shiny.rstudio.com/) to estimate number of samples in a prop
 * *W* - Weeks to finish the work
 * *D* - Days to finish the work
 * *M* - Months to finish the work
+
+## Static Demo
+![alt tag](https://cloud.githubusercontent.com/assets/996985/7919346/412c0f78-085d-11e5-96d1-d948d7c99d70.PNG)
