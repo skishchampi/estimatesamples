@@ -12,10 +12,10 @@ A [Shiny app](http://shiny.rstudio.com/) to estimate number of samples in a prop
 * *Samples per Week* - Depending on the person hours and business context limitations, set the number of samples that would be collected per week during the course of the experiment
 
 ## Outputs
-* *N* - Total sample size for both groups
-* *W* - Weeks to finish the work
-* *D* - Days to finish the work
-* *M* - Months to finish the work
+* *Samples* - Total sample size for both groups
+* *Weeks* - Weeks to finish the work
+* *Days* - Days to finish the work
+* *Months* - Months to finish the work
 
 ## Static Demo
 ![alt tag](https://cloud.githubusercontent.com/assets/996985/7919346/412c0f78-085d-11e5-96d1-d948d7c99d70.PNG)
